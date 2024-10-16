@@ -15,6 +15,7 @@ function App() {
         <Header />
       </Button> */}
       <Register />
+      <Register />
     </>
   );
 }
