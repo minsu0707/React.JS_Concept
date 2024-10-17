@@ -1,4 +1,4 @@
-import { Register } from "./components/Register";
+import { HookExam } from "./components/HookExam";
 
 function App() {
   // const ButtonProps = {
@@ -14,8 +14,7 @@ function App() {
         <div>자식요소</div>
         <Header />
       </Button> */}
-      <Register />
-      <Register />
+      <HookExam />
     </>
   );
 }
