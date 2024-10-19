@@ -3,7 +3,8 @@ import "./Editor.css";
 
 export const Editor = ({ onCreate }) => {
   const [content, setContent] = useState("");
-  const contentRef = useRef();
+  const contentRef = useRef(null);
+  // contentRef.current 는 input임
 
   const onChangeContent = (e) => {
     setContent(e.target.value);
