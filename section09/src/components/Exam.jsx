@@ -1,4 +1,4 @@
-import { act, useReducer } from "react";
+import { useReducer } from "react";
 
 // reducer : 변환기
 // -> 상태를 실제로 변화시키는 변환기 역할
