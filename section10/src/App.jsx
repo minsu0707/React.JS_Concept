@@ -1,5 +1,5 @@
 import "./App.css";
-import { useRef, useReducer } from "react";
+import { useRef, useReducer, useCallback } from "react";
 import { Header } from "./components/Header";
 import { Editor } from "./components/Editor";
 import { List } from "./components/List";
@@ -44,7 +44,7 @@ function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
   const idRef = useRef(3);
 
-  const onCreate = (content) => {
+  const onCreate = useCallback((content) => {
     dispatch({
       type: "CREATE",
       data: {
@@ -54,22 +54,26 @@ function App() {
         date: new Date().getTime(),
       },
     });
-  };
+  }, []);
 
-  const onUpDate = (targetId) => {
+  const onUpDate = useCallback((targetId) => {
     dispatch({
       type: "UPDATE",
       targetId: targetId,
     });
-  };
+  }, []);
 
-  const onDelete = (targetId) => {
-    // 인수 : todos 배열에서 targetId와 일치하는 id를 갖는 요소만 삭제한 새로운 배열
+  // useCallback(() => {}, []);
+  // 첫 번째 인수로는 최적화하고 싶은 함수를, 불필요하게 재생성되지 않도록 방지하고 싶은 함수를 넣음
+  // 두 번째 인수로는 deps를 넣음
+
+  const onDelete = useCallback((targetId) => {
     dispatch({
       type: "DELETE",
       targetId: targetId,
     });
-  };
+  }, []);
+  // mount 될 때만 생성하고 다시는 생성하지 않음
 
   return (
     <div className="App">
