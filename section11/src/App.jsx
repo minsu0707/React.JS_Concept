@@ -1,5 +1,12 @@
 import "./App.css";
-import { useRef, useReducer, useCallback, createContext } from "react";
+import {
+  useRef,
+  useReducer,
+  useCallback,
+  createContext,
+  useContext,
+  useMemo,
+} from "react";
 import { Header } from "./components/Header";
 import { Editor } from "./components/Editor";
 import { List } from "./components/List";
@@ -40,7 +47,8 @@ function reducer(state, action) {
   }
 }
 
-export const TodoContext = createContext();
+export const TodoStateContext = createContext();
+export const TodoDispatchContext = createContext();
 
 function App() {
   const [todos, dispatch] = useReducer(reducer, mockData);
@@ -77,20 +85,23 @@ function App() {
   }, []);
   // mount 될 때만 생성하고 다시는 생성하지 않음
 
+  const memoizedDispatch = useMemo(() => {
+    return {
+      onCreate,
+      onUpDate,
+      onDelete,
+    };
+  }, []);
+
   return (
     <div className="App">
-      <Header />
-      <TodoContext.Provider
-        value={{
-          todos,
-          onUpDate,
-          onDelete,
-          onCreate,
-        }}
-      >
-        <Editor />
-        <List todos={todos} onUpDate={onUpDate} onDelete={onDelete} />
-      </TodoContext.Provider>
+      <TodoStateContext.Provider value={todos}>
+        <TodoDispatchContext.Provider value={memoizedDispatch}>
+          <Header />
+          <Editor />
+          <List />
+        </TodoDispatchContext.Provider>
+      </TodoStateContext.Provider>
     </div>
   );
 }

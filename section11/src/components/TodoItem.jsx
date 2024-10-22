@@ -1,11 +1,11 @@
 import { memo, useContext } from "react";
 import "./TodoItem.css";
-import { TodoContext } from "../App";
+import { TodoDispatchContext } from "../App";
 // memo메서드는 현재 props와 과거 props가 같은 값인지 또는 다른 값인지를 판단해서 컴포넌트를 리렌더링 할지말지 결정함
 // -> 얕은 비교
 
 const TodoItem = ({ id, isDone, content, date }) => {
-  const { onUpDate, onDelete } = useContext(TodoContext);
+  const { onUpDate, onDelete } = useContext(TodoDispatchContext);
 
   const onChangeCheckBox = () => {
     onUpDate(id);
